@@ -2,7 +2,6 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
-from .views import home_view
 from .views import about_view
 from .views import contact_view
 
@@ -13,17 +12,14 @@ urlpatterns = [
     # view refers to the view function
     # name the URL
 
-    # path for index
-
-    path('', home_view, name='index'),
-
+    
     # path for about view
 
-    path('', about_view, name='about'),
+    path('about', about_view, name='about'),
 
     # path for contact us view
 
-    path('', contact_view, name='contact'),
+    path('contact', contact_view, name='contact'),
 
     # path for registration
 
