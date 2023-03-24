@@ -23,8 +23,20 @@
                     <a class="navbar-brand" href="#">Dealership Review</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+
+                    <li>
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="">Logout</a>
+                    </li>
+
+                    {% else %}
+
                     <li>
                         <form class="form-inline mt-2" method="post" action="">
+
+                            {% csrf_token %}
+                  
                             <div class="form-group">
                               <label for="id_username" class="sr-only">Username</label>
                               <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required>
@@ -39,6 +51,7 @@
                           
                         
                     </li>   
+                    {% endif %}
                 </ul>
             </div>
         </nav>
