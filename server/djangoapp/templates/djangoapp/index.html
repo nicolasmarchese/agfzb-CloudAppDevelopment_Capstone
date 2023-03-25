@@ -27,13 +27,13 @@
 
                     <li>
                         <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-                        <a class="btn btn-link" href="">Logout</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                     </li>
 
                     {% else %}
 
                     <li>
-                        <form class="form-inline mt-2" method="post" action="">
+                        <form class="form-inline mt-2" method="post" action="{% url 'djangoapp:login' %}">
 
                             {% csrf_token %}
                   
@@ -46,10 +46,8 @@
                               <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Log in</button>
-                            <a class="btn btn-link" href="">Sign up</a>
-                          </form>
-                          
-                        
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign up</a>
+                          </form> 
                     </li>   
                     {% endif %}
                 </ul>

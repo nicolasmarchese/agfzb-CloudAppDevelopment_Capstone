@@ -4,6 +4,11 @@ from django.conf import settings
 from . import views
 from .views import about_view
 from .views import contact_view
+from .views import home_view
+from .views import login_view
+from .views import logout_view
+from .views import registration_view
+
 
 
 app_name = 'djangoapp'
@@ -12,7 +17,10 @@ urlpatterns = [
     # view refers to the view function
     # name the URL
 
-    
+    # path for home view
+
+    path('home', home_view, name='home'),
+
     # path for about view
 
     path('about', about_view, name='about'),
@@ -23,9 +31,15 @@ urlpatterns = [
 
     # path for registration
 
+    path('registration', registration_view, name='registration'),
+
     # path for login
 
+    path('login', login_view, name='login'),
+
     # path for logout
+
+    path('logout', logout_view, name='logout'),
 
     path(route='', view=views.get_dealerships, name='index'),
 
