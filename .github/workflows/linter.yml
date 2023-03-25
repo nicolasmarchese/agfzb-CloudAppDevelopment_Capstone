@@ -2,9 +2,9 @@ name: 'Lint Code'
 
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
-    branches: [master]
+    branches: [master, main]
 
 jobs: # list of things to do
   lint_function_js:
