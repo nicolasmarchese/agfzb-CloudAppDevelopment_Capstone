@@ -4,23 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
     
 </head>
 <body>
-    <h1>Registration Form</h1>
-    <form method="post" action="">
-        {% csrf_token %}
-        <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name"><br><br>
-        <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name"><br><br>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Sign Up">
-    </form>
+   
+    <form action="" method="post">
+        
+        <div class="container"> <!--Style root div with .container class -->
+          <h1>Sign up</h1>
+          <div class="form-group"> <!--Style second div with .form-group class -->
+            <label for="username"><b>User Name</b></label>
+            <input id="username" class = "form-control" type="text" placeholder="Enter User Name: " name="username" required> <!--Style input with .form-control class -->
+            <label for="psw"><b>Password</b></label>
+            <input id="psw" class = "form-control" type="password"  placeholder="Enter Password: " name="psw" required> <!--Style input with .form-control class -->
+          </div>
+          <button class="btn btn-primary" type="submit">Sign up</button> <!--Style button with .btn and .btn-primary class -->
+        </div>
+      </form>
 </body>
 </html>
 
