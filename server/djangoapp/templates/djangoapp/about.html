@@ -9,10 +9,56 @@
     </head>
     <body>
 
-    <div class="text-center mt-4">
-    <h2>Welcome to Best Cars dealership, home to the best cars in North America.</h2>
-    <h3>We sell domestic and imported cars at reasonable prices</h3>
-</div>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header ">
+                    <a class="navbar-brand" href="{% url 'djangoapp:home' %}">Dealership Review</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+
+                    <li>
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+
+                    {% else %}
+
+                    <li>
+                        <form class="form-inline mt-2" method="post" action="{% url 'djangoapp:login' %}">
+
+                            {% csrf_token %}
+                  
+                            <div class="form-group">
+                              <label for="id_username" class="sr-only">Username</label>
+                              <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="id_password" class="sr-only">Password</label>
+                              <input type="password" class="form-control" id="id_password" name="psw" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign up</a>
+                          </form> 
+                    </li>   
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+
+        <main class="container mt-5">
+
+            <div class="mt-5">
+                <h2>About Us</h2>
+                <hr>
+                <p class="lead">Welcome to Best Cars dealership, home to the best cars in North America.</p>
+                <p class="lead">We sell domestic and imported cars at reasonable prices.</p> 
+                <hr class="my-0">
+            </div>
+    
+        </main>
+    
 
 <div class="text-right">
     <footer class="fixed-bottom">  
