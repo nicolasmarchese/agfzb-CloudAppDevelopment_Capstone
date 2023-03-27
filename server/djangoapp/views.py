@@ -43,18 +43,19 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('djangoapp:index') 
-        else: 
-            context["message"] = "Invalid username or password."
-            return render(request, "djangoapp/index.html", context)
-
-             
+            return render(request, 'djangoapp/index.html', context)
+        else:
+            return render(request, 'djangoapp/index.html', context)
+    else:
+        return render(request, 'djangoapp/index.html', context)
 
 # Create a `logout_request` view to handle sign out request
 
 def logout_view(request):
+    context={}
     logout(request)
-    return redirect('djangoapp:index') 
+    return render(request, 'djangoapp/index.html', context)
+
 
 # Create a `registration_request` view to handle sign up request
 
@@ -65,7 +66,7 @@ def registration_view(request):
     elif request.method == "POST":
         # Check if user exists
         username = request.POST["username"]
-        password = request.POST["password"]
+        password = request.POST["psw"]
         first_name = request.POST["firstname"]
         last_name = request.POST["lastname"]
         user_exist = False
@@ -78,10 +79,9 @@ def registration_view(request):
             user = User.objects.create_user(username = username, first_name = first_name, 
                                             last_name = last_name, password = password)
             login(request, user)
-            return redirect("djangoapp:index")
+            return render(request, 'djangoapp/index.html', context)
         else:
-            context["message"] = "User already exists."
-            return render(request, "djangoapp/registration.html", context)
+            return render(request, 'djangoapp/index.html', context)
       
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
