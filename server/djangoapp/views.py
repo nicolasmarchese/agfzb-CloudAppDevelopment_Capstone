@@ -16,19 +16,11 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
-
-def home_view(request):
-    current_endpoint = request.path
-    context = {'current_endpoint': current_endpoint}
-    if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
-
-
 # Create an `about` view to render a static about page
 
 def about_view(request):
-    current_endpoint = request.path
-    context = {'current_endpoint': current_endpoint}
+    endpoint = request.path
+    context = {'endpoint': endpoint}
     if request.method == "GET":
         return render(request, 'djangoapp/about.html', context)
 
@@ -36,8 +28,8 @@ def about_view(request):
 # Create a `contact` view to return a static contact page
 
 def contact_view(request):
-    current_endpoint = request.path
-    context = {'current_endpoint': current_endpoint}
+    endpoint = request.path
+    context = {'endpoint': endpoint}
     if request.method == "GET":
         return render(request, 'djangoapp/contact_us.html', context)
 

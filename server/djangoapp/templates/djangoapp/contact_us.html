@@ -12,7 +12,7 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header ">
-                <a class="navbar-brand" href="{% url 'djangoapp:home' %}">Dealership Review</a>
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
@@ -47,24 +47,28 @@
     </nav>
 
 
-    <main class="container mt-3">
-
-        <div>
-            <h2>Contact Us</h2>
-            <hr class="my-4">
-            <p><span class="lead">Email: </span> <span class="mx-2">info@cardealership.com</span></p>
-            <p><span class="lead">Telephone: </span> <span class="mx-2">+1 (555) 123-4567</span></p>
-            <p><span class="lead">Address: </span> <span class="mx-2">123 Main Street, Anytown, USA</span></p>
-            <hr class="my-0">
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card border-0 shadow my-5">
+              <div class="card-body p-5">
+                <h2 class="card-title mb-4">Contact Us</h2>
+                <hr class="my-4">
+                <p class="card-text fs-5 lh-lg mb-4"><span class="fw-bold me-2">Email:</span> info@cardealership.com</p>
+                <p class="card-text fs-5 lh-lg mb-4"><span class="fw-bold me-2">Telephone:</span> +1 (555) 123-4567</p>
+                <p class="card-text fs-5 lh-lg mb-0"><span class="fw-bold me-2">Address:</span> 123 Main Street, Anytown, USA</p>
+              </div>
+            </div>
+          </div>
         </div>
-
-    </main>
+      </main>
+      
 
     <div class="text-right">
         <footer class="fixed-bottom">  
                     
-             <a class="btn btn-link" href="home">Home</a>
              <a class="btn btn-link" href="about">About us</a>
+             <a class="btn btn-link" href="contact">Contact Us</a>
                  
         </footer>
     

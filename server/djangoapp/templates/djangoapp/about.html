@@ -12,7 +12,7 @@
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <div class="navbar-header ">
-                    <a class="navbar-brand" href="{% url 'djangoapp:home' %}">Dealership Review</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
@@ -48,23 +48,30 @@
 
 
         <main class="container mt-5">
-
-            <div class="mt-5">
-                <h2>About Us</h2>
-                <hr>
-                <p class="lead">Welcome to Best Cars dealership, home to the best cars in North America.</p>
-                <p class="lead">We sell domestic and imported cars at reasonable prices.</p> 
-                <hr class="my-0">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="card border-0 shadow my-5">
+                  <div class="card-body p-5">
+                    <h2 class="card-title mb-4">About Us</h2>
+                    <hr class="my-4">
+                    <p class="card-text fs-5 lh-lg text-muted mb-4">Welcome to Best Cars dealership, home to the best cars in North America.</p>
+                    <p class="card-text fs-4 fw-bold mb-0">We sell domestic and imported cars at reasonable prices.</p>
+                    <p class="card-text fs-4 fw-bold mt-4">Guaranteed quality, and the best value for money</p>
+                    <hr>
+                    <p class="card-text fs-4 fw-bold mt-4 text-center">Sit back and take a look, you won't regret it!</p>
+                  </div>
+                </div>
+              </div>
             </div>
-    
-        </main>
+          </main>
+          
     
 
 <div class="text-right">
     <footer class="fixed-bottom">  
                 
-         <a class="btn btn-link" href="home">Home</a>
          <a class="btn btn-link" href="contact">Contact Us</a>
+         <a class="btn btn-link" href="about">About us</a>
              
     </footer>
 

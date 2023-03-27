@@ -4,7 +4,6 @@ from django.conf import settings
 from . import views
 from .views import about_view
 from .views import contact_view
-from .views import home_view
 from .views import login_view
 from .views import logout_view
 from .views import registration_view
@@ -17,10 +16,7 @@ urlpatterns = [
     # view refers to the view function
     # name the URL
 
-    # path for home view
-
-    path('home', home_view, name='home'),
-
+  
     # path for about view
 
     path('about', about_view, name='about'),
