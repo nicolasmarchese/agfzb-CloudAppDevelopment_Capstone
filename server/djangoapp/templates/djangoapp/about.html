@@ -9,42 +9,46 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <div class="navbar-header ">
-                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
+        <header class="pb-5">
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div class="container-fluid">
+                    <div class="navbar-header ">
+                        <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+    
+                        <li>
+                            <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
+                            <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                        </li>
+    
+                        {% else %}
+    
+                        <li>
+                            <form class="form-inline mt-2" method="post" action="{% url 'djangoapp:login' %}">
+    
+                                {% csrf_token %}
+                      
+                                <div class="form-group">
+                                  <label for="id_username" class="sr-only">Username</label>
+                                  <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required>
+                                </div>
+                                <div class="form-group ml-2">
+                                  <label for="id_password" class="sr-only">Password</label>
+                                  <input type="password" class="form-control" id="id_password" name="psw" placeholder="Password" required>
+                                </div>
+                                <div class="form-group ml-2">
+                                <button type="submit" class="btn btn-primary">Log in</button>
+                                <a class="btn btn-link" href="registration">Sign up</a>
+                                </div>
+                              </form> 
+                        </li>   
+                        {% endif %}
+                    </ul>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
-
-                    <li>
-                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
-                    </li>
-
-                    {% else %}
-
-                    <li>
-                        <form class="form-inline mt-2" method="post" action="{% url 'djangoapp:login' %}">
-
-                            {% csrf_token %}
-                  
-                            <div class="form-group">
-                              <label for="id_username" class="sr-only">Username</label>
-                              <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required>
-                            </div>
-                            <div class="form-group">
-                              <label for="id_password" class="sr-only">Password</label>
-                              <input type="password" class="form-control" id="id_password" name="psw" placeholder="Password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Log in</button>
-                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign up</a>
-                          </form> 
-                    </li>   
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+            </nav>
+        </header>
 
 
         <main class="container mt-5">
@@ -67,15 +71,15 @@
           
     
 
-<div class="text-right">
-    <footer class="fixed-bottom">  
-                
-         <a class="btn btn-link" href="contact">Contact Us</a>
-         <a class="btn btn-link" href="about">About us</a>
-             
-    </footer>
-
-</div>
+          <div class="text-right">
+            <footer class="navbar-dark fixed-bottom bg-dark">  
+                        
+                 <a class="btn btn-link" href="about">About us</a>
+                 <a class="btn btn-link" href="contact">Contact Us</a>
+                     
+            </footer>
+        
+        </div>
 
 
     </body>
