@@ -9,8 +9,18 @@
     
 </head>
 <body>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="navbar-header ">
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
+            </div>
+    </nav>
+
    
-    <form action="" method="post">
+    <form action="{% url 'djangoapp:registration' %}" method="post">
+
+        {% csrf_token %}
         
         <div class="container mt-2"> 
           <h1>Sign up</h1>
@@ -31,8 +41,7 @@
 
       <div class="text-right">
         <footer class="fixed-bottom">  
-                    
-             <a class="btn btn-link" href="home">Home</a>
+        
              <a class="btn btn-link" href="contact">Contact Us</a>
              <a class="btn btn-link" href="about">About Us</a>
                  
