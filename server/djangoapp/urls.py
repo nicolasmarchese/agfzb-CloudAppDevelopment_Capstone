@@ -1,12 +1,12 @@
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from . import views
 from .views import about_view
 from .views import contact_view
 from .views import login_view
 from .views import logout_view
 from .views import registration_view
+from .views import get_dealerships
 
 
 
@@ -37,7 +37,7 @@ urlpatterns = [
 
     path('logout', logout_view, name='logout'),
 
-    path(route='', view=views.get_dealerships, name='index'),
+    path('', get_dealerships, name='index'),
 
     # path for dealer reviews view
 
