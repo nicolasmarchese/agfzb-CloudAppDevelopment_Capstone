@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import CarModel, CarDealer
-from .restapis import get_dealers_from_cf, get_dealer_by_state
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -97,17 +97,50 @@ def get_dealerships(request):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 
-# def get_dealer_details(request, dealer_id):
-#     context = {}
-#     if request.method == "GET":
-#         url = "https://us-south.functions.appdomain.cloud/api/v1/web/7ccc880f-504c-4f24-a816-b01352454616/dealership-package/get-review"
-#         reviews = get_dealer_reviews_from_cf(url, dealer_id)
-#         context = {
-#             "reviews": reviews,
-#             "dealer_id": dealer_id
-#         }
-#     return render(request, "djangoapp/dealer_details.html", context)
-# Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    context = {}
+    if request.method == "GET":
+        url = "https://us-south.functions.appdomain.cloud/api/v1/web/1fb30bdc-da8e-4040-b8c5-b86d07927bc0/dealership-package/get-review"
+        reviews = get_dealer_reviews_from_cf(url, dealer_id)
+        context = {
+            "reviews": reviews,
+            "dealer_id": dealer_id
+        }
+    return render(request, "djangoapp/dealer_details.html", context)
 
+# Create a `add_review` view to submit a review
+def add_review(request, dealer_id):
+    if request.method == "GET":
+        cars = CarModel.objects.filter(dealer_id=dealer_id)
+        context = { "cars": cars, "dealer_id": dealer_id }
+        return render(request, "djangoapp/add_review.html", context)
+    
+    if request.method == "POST":
+        carId = request.POST.get("car")
+        car = CarModel.objects.get(id=carId)
+        purchase = "false"
+        if request.POST.get("purchasecheck") == "on":
+            purchase = "true"
+        review_data = request.POST
+        print(car.make)
+        review = {"review": {}}
+        review["review"]["time"] = datetime.utcnow().isoformat()
+        review["review"]["dealership"] = dealer_id
+        review["review"]["review"] = review_data.get("content", "")
+        review["review"]["name"] = request.user.first_name
+        review["review"]["purchase"] = purchase
+        review["review"]["purchase_date"] = review_data.get("purchasedate", "")
+        review["review"]["car_make"] = car.make.name
+        review["review"]["car_model"] = car.name
+        review["review"]["car_year"] = car.year.strftime("%Y")
+        print(review)
+        response = post_request(
+            "https://us-south.functions.appdomain.cloud/api/v1/web/7ccc880f-504c-4f24-a816-b01352454616/dealership-package/post-review",
+            review,
+            dealerId=dealer_id
+        )
+        if response.status_code == 200:
+            return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+        context = { "message" : "Something went wrong with your submission :("}
+        return render(request, "djangoapp/add_review.html", context)
+    return HttpResponse("Couldn't fulfill your request.", status=400)
