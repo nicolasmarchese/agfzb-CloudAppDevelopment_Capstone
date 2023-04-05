@@ -55,35 +55,35 @@ def post_request(url, json_payload, **kwargs):
 def get_dealers_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
-    if json_result and "doc" in json_result and "dealerships" in json_result["doc"]:
-        # Get the list of dealerships from JSON
-        dealerships = json_result["doc"]["dealerships"]
-        # For each dealership object
-        for dealership in dealerships:
-            # Create a CarDealer object with values from the dealership dictionary
-            dealer_obj = CarDealer(
-                address=dealership["address"],
-                city=dealership["city"],
-                full_name=dealership["full_name"],
-                id=dealership["id"],
-                lat=dealership["lat"],
-                long=dealership["long"],
-                short_name=dealership["short_name"],
-                st=dealership["st"],
-                zip=dealership["zip"]
-            )
-            results.append(dealer_obj)
-        return results
+    response = requests.get(url, params=kwargs)
+    data = response.json()
+    dealerships = data.get('docs', [])
+    # For each dealership object
+    for dealership in dealerships:
+        # Create a CarDealer object with values from the dealership dictionary
+        dealer_obj = CarDealer(
+            address=dealership["address"],
+            city=dealership["city"],
+            full_name=dealership["full_name"],
+            id=dealership["id"],
+            lat=dealership["lat"],
+            long=dealership["long"],
+            short_name=dealership["short_name"],
+            st=dealership["st"],
+            state=dealership["state"],
+            zip=dealership["zip"]
+        )
+        results.append(dealer_obj)
+    return results
 
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 def get_dealer_reviews_from_cf(url, dealerId):
     reviews_list = []
-    results = get_request(url, dealerId=dealerId)
+    results = requests.get(url, params={'dealerId':dealerId}).json()
     if results:
-        for review in results:
+        for review in results.get('docs', []):
             review_object = DealerReview(
                 dealership=review.get("dealership", ""),
                 name=review.get("name", ""),
