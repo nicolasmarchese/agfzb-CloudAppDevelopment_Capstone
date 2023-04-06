@@ -6,32 +6,32 @@ from requests.auth import HTTPBasicAuth
 
 # Create a `get_request` to make HTTP GET requests
 
-def get_request(url, **kwargs):
+# def get_request(url, **kwargs):
     
-    # If argument contain API KEY
-    api_key = kwargs.get("api_key")
-    print("GET from {} ".format(url))
-    try:
-        if api_key:
-            params = dict()
-            params["text"] = kwargs["text"]
-            params["version"] = kwargs["version"]
-            params["features"] = kwargs["features"]
-            params["return_analyzed_text"] = kwargs["return_analyzed_text"]
-            response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
-                                    auth=HTTPBasicAuth('apikey', api_key))
-        else:
-            # Call get method of requests library with URL and parameters
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs)
-    except:
-        # If any error occurs
-        print("Network exception occurred")
+#     # If argument contain API KEY
+#     api_key = kwargs.get("api_key")
+#     print("GET from {} ".format(url))
+#     try:
+#         if api_key:
+#             params = dict()
+#             params["text"] = kwargs["text"]
+#             params["version"] = kwargs["version"]
+#             params["features"] = kwargs["features"]
+#             params["return_analyzed_text"] = kwargs["return_analyzed_text"]
+#             response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
+#                                     auth=HTTPBasicAuth('apikey', api_key))
+#         else:
+#             # Call get method of requests library with URL and parameters
+#             response = requests.get(url, headers={'Content-Type': 'application/json'},
+#                                     params=kwargs)
+#     except:
+#         # If any error occurs
+#         print("Network exception occurred")
 
-    status_code = response.status_code
-    print("With status {} ".format(status_code))
-    json_data = json.loads(response.text)
-    return json_data
+#     status_code = response.status_code
+#     print("With status {} ".format(status_code))
+#     json_data = json.loads(response.text)
+#     return json_data
 
 
 # Create a `post_request` to make HTTP POST requests
@@ -81,9 +81,11 @@ def get_dealers_from_cf(url, **kwargs):
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 def get_dealer_reviews_from_cf(url, dealerId):
     reviews_list = []
-    results = requests.get(url, params={'dealerId':dealerId}).json()
-    if results:
-        for review in results.get('docs', []):
+    response = requests.get(url, params={'dealerId':dealerId})
+    data = response.json()
+    results = data.get('docs', [])
+
+    for review in results:
             review_object = DealerReview(
                 dealership=review.get("dealership", ""),
                 name=review.get("name", ""),
@@ -96,32 +98,30 @@ def get_dealer_reviews_from_cf(url, dealerId):
                 car_year=review.get("car_year", ""),
                 sentiment="",
             )
-            review_object.sentiment = analyze_review_sentiments(review_object.review)
+            # review_object.sentiment = analyze_review_sentiments(review_object.review)
             reviews_list.append(review_object)
     return reviews_list
 
 
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
-def analyze_review_sentiments(text): 
+# def analyze_review_sentiments(text): 
 
-    url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/ed1820d4-8fc6-4852-afb2-c2bb7f5686c5" 
+#     url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/3b742a58-aa4f-4bc1-8a71-d36c44eb2084" 
 
-    api_key = "Sjdb1drxG_fDo4o94UUToRPoSKpLN1k0MLnzAy2xZO3o" 
+#     api_key = "iAD7uu5BtUVk9xWs5HeVz2dn4pLqI4MmK4_LTBvWAJzP" 
 
-    authenticator = IAMAuthenticator(api_key) 
+#     authenticator = IAMAuthenticator(api_key) 
 
-    natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator) 
+#     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator) 
 
-    natural_language_understanding.set_service_url(url) 
+#     natural_language_understanding.set_service_url(url) 
 
-    response = natural_language_understanding.analyze( text=text ,features=Features(sentiment=SentimentOptions(targets=[text])), language="en").get_result() 
+#     response = natural_language_understanding.analyze( text=text ,features=Features(sentiment=SentimentOptions(targets=[text])), language="en").get_result() 
 
-    label=json.dumps(response, indent=2) 
+#     label=json.dumps(response, indent=2) 
 
-    label = response['sentiment']['document']['label'] 
+#     label = response['sentiment']['document']['label'] 
 
-    return(label) 
-
-
+#     return(label) 
 
