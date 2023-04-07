@@ -37,6 +37,9 @@ def contact_view(request):
 
 def login_view(request):
     context={}
+    url = "https://us-south.functions.appdomain.cloud/api/v1/web/7ccc880f-504c-4f24-a816-b01352454616/dealership-package/get-dealership"
+    dealerships = get_dealers_from_cf(url)
+    context["dealership_list"]=dealerships
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['psw']
@@ -53,6 +56,10 @@ def login_view(request):
 
 def logout_view(request):
     context={}
+    url = "https://us-south.functions.appdomain.cloud/api/v1/web/7ccc880f-504c-4f24-a816-b01352454616/dealership-package/get-dealership"
+    dealerships = get_dealers_from_cf(url)
+    # Concat all dealer's short name
+    context["dealership_list"]=dealerships
     logout(request)
     return render(request, 'djangoapp/index.html', context)
 
