@@ -146,7 +146,6 @@ def add_review(request, dealer_id):
         if request.POST.get("purchasecheck") == "on":
             purchase = "true"
         review_data = request.POST
-        print(car.make)
         review = {"review": {}}
         review["review"]["time"] = datetime.utcnow().isoformat()
         review["review"]["dealership"] = dealer_id
@@ -154,17 +153,15 @@ def add_review(request, dealer_id):
         review["review"]["name"] = request.user.first_name
         review["review"]["purchase"] = purchase
         review["review"]["purchase_date"] = review_data.get("purchasedate", "")
-        review["review"]["car_make"] = car.make.name
+        review["review"]["car_make"] = car.car_make.name
         review["review"]["car_model"] = car.name
-        review["review"]["car_year"] = car.year.strftime("%Y")
-        print(review)
+        review["review"]["car_year"] = car.car_year.strftime("%Y")
+
         response = post_request(
             "https://us-south.functions.appdomain.cloud/api/v1/web/7ccc880f-504c-4f24-a816-b01352454616/dealership-package/post-review",
             review,
             dealerId=dealer_id
         )
-        if response.status_code == 200:
-            return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
-        context = { "message" : "Something went wrong with your submission :("}
-        return render(request, "djangoapp/add_review.html", context)
-    return HttpResponse("Couldn't fulfill your request.", status=400)
+        
+        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+       
