@@ -2,6 +2,9 @@ import requests
 import json
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
 
 
 # Create a `get_request` to make HTTP GET requests
@@ -98,30 +101,30 @@ def get_dealer_reviews_from_cf(url, dealerId):
                 car_year=review.get("car_year", ""),
                 sentiment="",
             )
-            # review_object.sentiment = analyze_review_sentiments(review_object.review)
+            review_object.sentiment = analyze_review_sentiments(review_object.review)
             reviews_list.append(review_object)
     return reviews_list
 
 
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
-# def analyze_review_sentiments(text): 
+def analyze_review_sentiments(text): 
 
-#     url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/3b742a58-aa4f-4bc1-8a71-d36c44eb2084" 
+        url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/3b742a58-aa4f-4bc1-8a71-d36c44eb2084" 
 
-#     api_key = "iAD7uu5BtUVk9xWs5HeVz2dn4pLqI4MmK4_LTBvWAJzP" 
+        api_key = "iAD7uu5BtUVk9xWs5HeVz2dn4pLqI4MmK4_LTBvWAJzP" 
 
-#     authenticator = IAMAuthenticator(api_key) 
+        authenticator = IAMAuthenticator(api_key) 
 
-#     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator) 
+        natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator) 
 
-#     natural_language_understanding.set_service_url(url) 
+        natural_language_understanding.set_service_url(url) 
 
-#     response = natural_language_understanding.analyze( text=text ,features=Features(sentiment=SentimentOptions(targets=[text])), language="en").get_result() 
+        response = natural_language_understanding.analyze( text=text ,features=Features(sentiment=SentimentOptions(targets=[text])), language="en").get_result() 
 
-#     label=json.dumps(response, indent=2) 
+        label=json.dumps(response, indent=2) 
 
-#     label = response['sentiment']['document']['label'] 
+        label = response['sentiment']['document']['label'] 
 
-#     return(label) 
+        return(label) 
 

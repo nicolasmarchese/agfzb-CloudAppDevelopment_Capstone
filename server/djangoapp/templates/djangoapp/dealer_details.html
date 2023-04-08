@@ -67,7 +67,7 @@
      <div class="card-columns m-4">
         {% for review in reviews %}
             <div class="card">
-                <img class="card-img-left pt-2 pl-2" width="50" src="{{MEDIA_URL}}/emoji/positive.png">
+                <img class="card-img-left pt-2 pl-2" width="50" src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png">
                 <div class="card-body">
                     <h5 class="card-title">
                         {{review.car_make}} , {{review.car_model}}
