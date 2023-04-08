@@ -21,11 +21,11 @@ urlpatterns = [
   
     # path for about view
 
-    path('about', about_view, name='about'),
+    path('about.html', about_view, name='about'),
 
     # path for contact us view
 
-    path('contact', contact_view, name='contact'),
+    path('contact_us.html', contact_view, name='contact'),
 
     # path for registration
 
