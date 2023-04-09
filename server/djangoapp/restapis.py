@@ -7,52 +7,6 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
 
 
-# Create a `get_request` to make HTTP GET requests
-
-# def get_request(url, **kwargs):
-    
-#     # If argument contain API KEY
-#     api_key = kwargs.get("api_key")
-#     print("GET from {} ".format(url))
-#     try:
-#         if api_key:
-#             params = dict()
-#             params["text"] = kwargs["text"]
-#             params["version"] = kwargs["version"]
-#             params["features"] = kwargs["features"]
-#             params["return_analyzed_text"] = kwargs["return_analyzed_text"]
-#             response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
-#                                     auth=HTTPBasicAuth('apikey', api_key))
-#         else:
-#             # Call get method of requests library with URL and parameters
-#             response = requests.get(url, headers={'Content-Type': 'application/json'},
-#                                     params=kwargs)
-#     except:
-#         # If any error occurs
-#         print("Network exception occurred")
-
-#     status_code = response.status_code
-#     print("With status {} ".format(status_code))
-#     json_data = json.loads(response.text)
-#     return json_data
-
-
-# Create a `post_request` to make HTTP POST requests
-def post_request(url, json_payload, **kwargs):
-    #print(kwargs)
-    #print("GET from {} ".format(url))  
-    try:
-        response = requests.post(url, params=kwargs, headers={'Content-Type': 'application/json'}, 
-                                 json=json_payload)
-    except:
-        # If any error occurs
-        print("Network exception occurred")
-    status_code = response.status_code
-    json_data = json.loads(response.text)
-    #print("With status {} ".format(status_code))
-    return json_data
-
-
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 
 def get_dealers_from_cf(url, **kwargs):
@@ -82,6 +36,7 @@ def get_dealers_from_cf(url, **kwargs):
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
+
 def get_dealer_reviews_from_cf(url, dealerId):
     reviews_list = []
     response = requests.get(url, params={'dealerId':dealerId})
@@ -105,9 +60,26 @@ def get_dealer_reviews_from_cf(url, dealerId):
             reviews_list.append(review_object)
     return reviews_list
 
+# Create a `post_request` to make HTTP POST requests
+
+def post_request(url, json_payload, **kwargs):
+
+    try:
+        response = requests.post(url, params=kwargs, headers={'Content-Type': 'application/json'}, 
+                                 json=json_payload)
+    except:
+        # If any error occurs
+        print("Network exception occurred")
+    status_code = response.status_code
+    json_data = json.loads(response.text)
+    
+    return json_data
+
+
 
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
+
 def analyze_review_sentiments(text): 
 
         url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/3b742a58-aa4f-4bc1-8a71-d36c44eb2084" 

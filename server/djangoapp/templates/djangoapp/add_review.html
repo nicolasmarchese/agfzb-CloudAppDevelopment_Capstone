@@ -53,12 +53,10 @@
 </header>
 
     <body>
-    <!--Add review form here -->
     <main class="container mt-5">
         <h3>Add a review about this Car Dealership</h3>
         <hr>
         <br>
-        <!--review form -->
         <form action="{% url 'djangoapp:add_review' dealer_id %}" method="post">
             {% csrf_token %}
             <div class="form-group">
